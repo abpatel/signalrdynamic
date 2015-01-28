@@ -1,0 +1,1 @@
+This folder contains the nuget executable and the nuget packages that are generated via post build steps.

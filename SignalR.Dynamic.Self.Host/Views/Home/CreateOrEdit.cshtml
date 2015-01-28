@@ -1,0 +1,45 @@
+﻿@using System.Linq;
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<SignalR.Dynamic.API.Common.Setting>
+<html lang="en" xmlns="http://w3/ord/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Create/Edit App Setting</title>
+    <link text="text/css" href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="/createoredit/" method="post">
+        <h1>Enter configuraion value</h1>
+        <table>
+            <tr>
+                <input type="hidden" name="ID" value="@Model.ID" />
+            </tr>
+            <tr>
+                <td>SystemName</td>
+                <td>
+                    <input type="text" name="SystemName" value="@Model.SystemName" />
+                </td>
+            </tr>
+            <tr>
+                <td>Key</td>
+                <td>
+                    <input type="text" name="Key" value="@Model.Key" />
+                </td>
+            </tr>
+            <tr>
+                <td>Value</td>
+                <td>
+                    <input type="text" name="Value" value="@Model.Value" />
+                </td>
+            </tr>
+        </table>
+        @if (Model.ID == null)
+        {
+        <input type="submit" value="Add" />
+        }
+        else
+        {
+        <input type="submit" value="Update" />
+        }
+    </form>
+</body>
+</html>
