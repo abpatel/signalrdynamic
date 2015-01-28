@@ -34,7 +34,7 @@ namespace SignalR.Dynamic.API
                 publishers.Select(e => e.GetCustomAttribute<MetadataAttribute>())
                 .Select(a => new Metadata
                 {
-                    Topic = a.SystemName,
+                    Topic = a.Topic,
                     AuthorizationRoles = !string.IsNullOrWhiteSpace(a.Roles) ?
                                             a.Roles.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { }
                 }

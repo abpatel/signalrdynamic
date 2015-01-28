@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SignalR.Dynamic.Client.Publishers
 {
-    [Metadata(SystemName = "HealthMonitor")]
+    [Metadata(Topic = "HealthMonitor")]
     public class HeathMonitoring : IPublisher
     {
         private PerformanceCounter cpuCounter;
@@ -37,7 +37,7 @@ namespace SignalR.Dynamic.Client.Publishers
         public void Initialize()
         {
             Debug.WriteLine("Initializing Health Monitor Event Listener");
-            var config = configuration.GetConfiguration().Where(s => s.SystemName == "HealthMonitor").ToArray();
+            var config = configuration.GetConfiguration().Where(s => s.Topic == "HealthMonitor").ToArray();
             Debug.WriteLine("Configuration");
             Array.ForEach(config, c => Debug.WriteLine(c));
             var setting = config.FirstOrDefault(c => c.Key == "machinename");
@@ -62,7 +62,7 @@ namespace SignalR.Dynamic.Client.Publishers
         }
         public void OnConfigurationChange(params SettingChangeInfo[] settingChangeInfos)
         {
-            var changedSettings = settingChangeInfos.Where(s => s.Setting.SystemName == "HealthMonitor");
+            var changedSettings = settingChangeInfos.Where(s => s.Setting.Topic == "HealthMonitor");
             foreach (var setting in changedSettings)
             {
                 Debug.WriteLine("{0} was {1}", setting.Setting.Key, setting.ChangeType);
