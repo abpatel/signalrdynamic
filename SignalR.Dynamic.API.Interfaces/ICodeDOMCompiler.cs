@@ -11,6 +11,6 @@ namespace SignalR.Dynamic.API.Interfaces
    
     public interface ICodeDOMCompiler
     {
-        Assembly Compile(CodeCompileUnit targetUnit,string assemblyName = null);
+        Assembly Compile(CodeCompileUnit targetUnit);
     }
 }

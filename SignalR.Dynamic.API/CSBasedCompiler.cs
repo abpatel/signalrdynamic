@@ -15,7 +15,7 @@ namespace SignalR.Dynamic.API
 {
     public class CSBasedCompiler : ICodeDOMCompiler
     {
-        public Assembly Compile(CodeCompileUnit targetUnit,string assemblyName = null)
+        public Assembly Compile(CodeCompileUnit targetUnit)
         {
             //Ref:http://stackoverflow.com/questons/929349/is-there-a-qay-to-build-a-new-type-during-runtime
             string path = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
@@ -25,16 +25,18 @@ namespace SignalR.Dynamic.API
                 IncludeDebugInformation = true,
                 TreatWarningsAsErrors = true,
                 WarningLevel = 4,
-            };
-            if(! string.IsNullOrWhiteSpace(assemblyName))
-            {
-                string fileName = string.Format("{0}.dll", assemblyName);
-                compilerParameters.OutputAssembly = Path.Combine(path, fileName);
-                compilerParameters.GenerateInMemory = false;
-            }
-            compilerParameters.ReferencedAssemblies.Add("System.dll");
-            compilerParameters.ReferencedAssemblies.Add("System.Core.dll");
-            compilerParameters.ReferencedAssemblies.Add("Microsoft.CSharp.dll");
+                CompilerOptions = "/nostdlib"
+            };           
+            //For system.dll
+            compilerParameters.ReferencedAssemblies.Add(typeof(System.Diagnostics.Debug).Assembly.Location);
+
+            //For system.core.dll
+            compilerParameters.ReferencedAssemblies.Add(typeof(System.IO.DirectoryInfo).Assembly.Location);
+
+            //For Microsoft.CSharp.dll
+            compilerParameters.ReferencedAssemblies.Add(typeof(Microsoft.CSharp.RuntimeBinder.RuntimeBinderException).Assembly.Location);
+            compilerParameters.ReferencedAssemblies.Add(typeof(System.Runtime.CompilerServices.CallSite).Assembly.Location);
+            
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(path,"Microsoft.AspNet.SignalR.Core.dll"));
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(path,"SignalR.Dynamic.API.Common.dll"));
             compilerParameters.ReferencedAssemblies.Add(Path.Combine(path,"SignalR.Dynamic.API.Interfaces.dll"));
