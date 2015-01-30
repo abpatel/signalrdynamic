@@ -1,0 +1,103 @@
+﻿@model SignalR.Dynamic.API.Common.Setting
+
+@{
+    ViewBag.Title = "Create / Edit Publisher Settings";
+}
+
+<h2>Create / Edit Publisher Settings</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Setting</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new
+   {
+       @class = "text-danger"
+   })
+        <input type="hidden" name="ID" value="@Model.ID" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Topic, htmlAttributes: new
+       {
+           @class = "control-label col-md-2"
+       })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Topic, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control"
+               }
+           })
+                @Html.ValidationMessageFor(model => model.Topic, "", new
+           {
+               @class = "text-danger"
+           })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Key, htmlAttributes: new
+       {
+           @class = "control-label col-md-2"
+       })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Key, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control"
+               }
+           })
+                @Html.ValidationMessageFor(model => model.Key, "", new
+           {
+               @class = "text-danger"
+           })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Value, htmlAttributes: new
+       {
+           @class = "control-label col-md-2"
+       })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Value, new
+           {
+               htmlAttributes = new
+               {
+                   @class = "form-control"
+               }
+           })
+                @Html.ValidationMessageFor(model => model.Value, "", new
+           {
+               @class = "text-danger"
+           })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @if (Model.ID == null)
+                {
+                    <input type="submit" value="Add" class="btn btn-default" />
+                }
+                else
+                {
+                    <input type="submit" value="Update" class="btn btn-default" />
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

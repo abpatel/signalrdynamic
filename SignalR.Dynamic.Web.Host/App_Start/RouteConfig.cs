@@ -14,8 +14,8 @@ namespace SignalR.Dynamic.Web.Host
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
+                name: "Root",
+                url: "{action}/{id}",
                 defaults: new
                 {
                     controller = "Home",
@@ -23,6 +23,17 @@ namespace SignalR.Dynamic.Web.Host
                     id = UrlParameter.Optional
                 }
             );
+
+            routes.MapRoute(
+               name: "Default",
+               url: "{controller}/{action}/{id}",
+               defaults: new
+               {
+                   controller = "Home",
+                   action = "Index",
+                   id = UrlParameter.Optional
+               }
+           );
         }
     }
 }

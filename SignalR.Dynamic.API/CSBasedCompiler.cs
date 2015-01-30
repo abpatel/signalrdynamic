@@ -25,7 +25,7 @@ namespace SignalR.Dynamic.API
                 IncludeDebugInformation = true,
                 TreatWarningsAsErrors = true,
                 WarningLevel = 4,
-                CompilerOptions = "/nostdlib"
+                CompilerOptions = "/nostdlib", 
             };           
             //For system.dll
             compilerParameters.ReferencedAssemblies.Add(typeof(System.Diagnostics.Debug).Assembly.Location);

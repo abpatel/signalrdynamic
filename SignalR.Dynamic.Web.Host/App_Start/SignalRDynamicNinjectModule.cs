@@ -19,10 +19,12 @@ namespace SignalR.Dynamic.Web.Host
     {
         private void InitializeNinject()
         {
+            string settingsFileName = ConfigurationManager.AppSettings["SettingsFileName"];
+            string fullyQualifiedSettingFilePath = System.IO.Path.Combine(AppDomain.CurrentDomain.GetData("DataDirectory").ToString(), settingsFileName);
             this.Bind<IRepository<Setting>>()
                 .To<SettingsRepository>()
                 .InSingletonScope()
-                .WithConstructorArgument("settingsFileName", ConfigurationManager.AppSettings["SettingsFileName"]);
+                .WithConstructorArgument("settingsFileName", fullyQualifiedSettingFilePath);
             this.Bind(_ =>
             {
                 _.FromAssembliesMatching("SignalR.Dynamic.Client.*.dll", "SignalR.Dynamic.API.dll")
