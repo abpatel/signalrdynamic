@@ -11,17 +11,27 @@ namespace SignalR.Dynamic.Web.Host.Controllers
     public class HomeController : Controller
     {
         private IRepository<Setting> repo = null;
+        private IPublisherMetadataProvider metadataProvider = null;
 
-        public HomeController(IRepository<Setting> repo)
+        public HomeController(
+            IRepository<Setting> repo, 
+            IPublisherMetadataProvider metadataProvider)
         {
             this.repo = repo;
+            this.metadataProvider = metadataProvider;
         }
-        public ActionResult Index()
+        public ActionResult TopicSettings()
         {
             Setting[] model = repo.All.ToArray();
             return View(model);
         }
-
+       
+        public ActionResult Index()
+        {
+            var metadatas = metadataProvider.GetMetadata();
+            return View(metadatas);
+        }
+        
         public ActionResult CreateOrEdit(int? id)
         {
             Setting setting = null;
@@ -36,6 +46,12 @@ namespace SignalR.Dynamic.Web.Host.Controllers
             return View(setting);
         }
 
+        public ActionResult Details(int id)
+        {
+            Setting setting =  repo.Get(id);
+            return View(setting);
+        }
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Delete(Setting setting)

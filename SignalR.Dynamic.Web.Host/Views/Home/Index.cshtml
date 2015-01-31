@@ -1,44 +1,24 @@
-﻿@{
-    ViewBag.Title = "Publisher Settings";
-}
-@using System.Linq;
-@model SignalR.Dynamic.API.Common.Setting[]
+﻿@model IEnumerable<SignalR.Dynamic.API.Common.Metadata>
 
-<h2>Topic Configuration</h2>
-@if (Model.Length > 0)
-{
-    <table class="imagetable">
-        <tr>
-            <th>Topic Name</th>
-            <th>Key</th>
-            <th>Value</th>
-            <th>Actions</th>
-        </tr>
-        @foreach (var item in Model.OrderBy(s => s.Topic))
-        {
-            <tr>
-                <td>@item.Topic</td>
-                <td>@item.Key</td>
-                <td>@item.Value</td>
-                <td>
-                    <a href=@string.Format("/createoredit/{0}", item.ID)>Edit</a>
-                    <br/>
-                    @using(Html.BeginForm("delete","Home",FormMethod.Post,new{id=string.Format("deleteForm_{0}",item.ID)} ))
-                    {
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="ID" value="@item.ID"/>
-                        <a id="submit_link" href="javascript:void(0);" onclick='@string.Format(@"submitForm('deleteForm_{0}')",item.ID)'>Delete</a>
-                    }
-                </td>
-            </tr>
-        }
-    </table>
+@{
+    ViewBag.Title = "Registered Topics";
 }
-<hr/>
-<a href="/createoredit">Add new</a>
-<script>
-    function submitForm(formId) {
-        var form = document.getElementById(formId);
-        form.submit();
-    }
-</script>
+
+<h2>Registered Topics</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic)
+        </td>
+    </tr>
+}
+</table>
